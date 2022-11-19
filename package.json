@@ -1,0 +1,22 @@
+{
+  "name": "cs-546_group32_finalproject",
+  "version": "1.0.0",
+  "description": "The codebase for Garage Management Application.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rucha1999/CS-546_Group32_FinalProject.git"
+  },
+  "author": "Matthew Wrobel, Ethan Chang, Rucha Tirodkar, Shivam Patel, Arya Shah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rucha1999/CS-546_Group32_FinalProject/issues"
+  },
+  "homepage": "https://github.com/rucha1999/CS-546_Group32_FinalProject#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
