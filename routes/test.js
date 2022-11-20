@@ -5,7 +5,14 @@ const router = express.Router();
 
 router.route("/").get(async (req, res) => {
     //code here for GET
-    res.sendFile(path.resolve('static/homepage.html'));
+    res.render('homepage', {title: "Homepage"});
 });
+
+router.route("/example_page").get(async (req, res) => {
+    //code here for GET
+    res.render('example_page', {title: "Example Title"});
+});
+
+
 
 module.exports = router;

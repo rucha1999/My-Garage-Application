@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/rucha1999/CS-546_Group32_FinalProject#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "bootstrap": "^5.2.2",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6"
   }
 }

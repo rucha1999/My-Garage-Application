@@ -1,3 +1,67 @@
-h1 {
-    color: red
+#site_header {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    padding-left: 1em;
+    background-color: purple;
+    display: flex;
+}
+
+#site_title:hover {
+    cursor: pointer;
+}
+
+#site_title {
+    color:antiquewhite;
+    font-weight:700;
+    font-size: 30px;
+}
+
+#profile_name {
+    color:antiquewhite;
+    font-weight:400;
+    font-size: 18px;
+    align-self: center;
+    margin-left: auto;
+}
+
+#sidebar_title_row {
+    margin-top: 0.5em;
+    justify-content: center;
+}
+
+#sidebar_title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+html,body,.container {
+    height:100%;
+    background-color: whitesmoke;
+}
+
+.sidebar_link_btn {
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    width:90%;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar_link_btn:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar_link_btn:hover {
+    background-color: gray;
+}
+
+.sidebar_link_row {
+    justify-content: center;
+}
+
+.active {
+    font-weight:700;
 }
