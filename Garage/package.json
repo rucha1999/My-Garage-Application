@@ -1,0 +1,15 @@
+{
+  "name": "garage",
+  "version": "1.0.0",
+  "description": "My garage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Rucha Tirodkar",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^4.12.1"
+  }
+}
