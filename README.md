@@ -1,4 +1,4 @@
-# This is our Web Programming Final Project: 
+# This is our Web Programming Final Project
 
 ## Mygarage
 
@@ -17,7 +17,7 @@ Then run 'npm run seed' to run the task of seeding the database.
 - In addition, an authenticated user will be able to edit a few fields about their account information including their name, email, description, and vehicle description.
 - If a user account is listed as owning a garage, they will also have access to the garage management page: A page which loads information about the garage's monthly earnings, number of appointments, information about all appointments scheduled with that garage, and a few other details.
 
-## Group Members -
+## Group Members 
 - Rucha Tirodkar
 - Matt Wrobel
 - Ethan Chang
