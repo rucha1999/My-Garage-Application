@@ -1,0 +1,103 @@
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        {{!-- begin sidebar --}}
+        <div id="site_sidebar" class="col-2">
+            {{!-- begin sidebar links --}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/"> Homepage </a>
+            </div>
+            {{#unless logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/login">  Login/Register </a>
+                </div>
+            {{/unless}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/garage/garage_list"> Garage List </a>
+            </div>
+            {{#if logged_in}}
+                <div class="row sidebar_link_row ">
+                    <a class="sidebar_link_btn active" href="/users/user_profile/"> User Profile </a>
+                </div>
+            {{/if}}
+            {{#if isOwner}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/garage/management">Garage Management</a>
+                </div>
+            {{/if}}
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/logout"> Logout </a>
+                </div>
+            {{/if}}
+            {{!-- end sidebar links --}}
+        </div>
+        {{!-- end sidebar --}}
+
+        {{!-- begin page content --}}
+        <div id="site_content" class="col-10">
+            <div class="row">
+                <h2>Name: <span id="user_prof_name">{{user.name}}</span></h2>
+            </div>
+            <div class="row">
+                <h3>Email: {{user.email}}</h3>
+            </div>
+            <div class="row">
+                <h3>
+                    Description: 
+                </h3><br>
+            </div>
+            <div class="row">
+                <div class="desc_box">
+                    <span id="user_desc">{{user.description}}</span>
+                </div>
+             </div>
+            <div class="row">
+                <h3>
+                    Vehicles:
+                </h3><br>
+            </div>
+            <div class="row">
+                <div class="desc_box">
+                    <span id="user_vehicles">{{user.vehicles}}</span>
+                </div>
+            </div>
+            
+            <div class="row">
+                <h4>
+                    Favorite Garage:
+                </h4><br>
+            </div>
+            {{#if user.favorite}}
+                <div class="row py-3 px-2 my-1 appt-box">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6">
+                                <span>
+                                    Name: <b><a style=color:#0055af href="/garage/info/{{user.favorite._id}}">{{user.favorite.name}}</a></b>
+                                </span>
+                            </div>
+                            <div class="col-6">
+                                <span>
+                                    Phone No: {{user.favorite.phoneNumber}}
+                                </span>
+                            </div>
+                            <div class="col-6">
+                                <span>
+                                    Location: {{user.favorite.location}}
+                                </span>
+                            </div>                 
+                        </div>
+                    </div>
+                </div>
+            {{else}}
+                <div class="row">
+                    None
+                </div>
+            {{/if}}
+            <div class="row">
+                <b><a style=color:#0055af href="/users/user_profile/edit">Edit Details</a></b>
+            </div>
+        {{!-- end page content --}}
+        </div>
+    </div>
+</div>

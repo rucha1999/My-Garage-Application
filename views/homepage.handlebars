@@ -1,31 +1,81 @@
+<link rel="stylesheet" href="/public/css/main.css">
 <div class="container-fluid h-100">
     <div class="row h-100">
         {{!-- begin sidebar --}}
         <div id="site_sidebar" class="col-2">
-            <div id="sidebar_title_row" class="row">
-                <span id="sidebar_title"> Sidebar Title </span>
-            </div>
             {{!-- begin sidebar links --}}
             <div class="row sidebar_link_row">
-                <a class="sidebar_link_btn" href="/example_page/" > Example Page </a>
+                <a class="sidebar_link_btn active" href="/"> Homepage </a>
             </div>
+            {{#unless logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/login">  Login/Register </a>
+                </div>
+            {{/unless}}
             <div class="row sidebar_link_row">
-                <span class="sidebar_link_btn" > Example Btn </span>
+                <a class="sidebar_link_btn" href="/garage/garage_list"> Garage List </a>
             </div>
-            <div class="row sidebar_link_row">
-                <span class="sidebar_link_btn" > Example Btn </span>
-            </div>
-            <div class="row sidebar_link_row">
-                <span class="sidebar_link_btn" > Example Btn </span>
-            </div>
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/user_profile/"> User Profile </a>
+                </div>
+            {{/if}}
+            {{#if isOwner}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/garage/management">Garage Management</a>
+                </div>
+            {{/if}}
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/logout"> Logout </a>
+                </div>
+            {{/if}}
             {{!-- end sidebar links --}}
         </div>
         {{!-- end sidebar --}}
 
         {{!-- begin page content --}}
         <div id="site_content" class="col-10">
-            <span>Here is some content for the main homepage. We will fill this in later with whatever we want to place here.</span>
+            <span>
+                <h1>
+                    MyGarage
+                </h1>
+                <h2>
+                    The most trusted websites to find reliable vehicle service center
+                </h2>
+                <p>Our application works with the motive of managing car maintenance, allowing users to find service centers
+                based on service offered and ratings.
+                Regular users are able to use our application to find the service centers that fit their needs, while
+                service center owners are able to advertise and manage the services that they offer.</p>
+                <h3>
+                    MyGarage Features
+                    </h3>
+                <ol>
+                    <li>User can search and schedule an appointment with a good vehicle service center in the locality.</li>
+                    <li>Ability to choose favourite and look out for inventory</li>
+                    <li>Garage Owners can manage appointments and track progress and earnings.</li>
+                </ol>
+            </span>
         </div>
+
+        {{!-- <div class="searchbar">
+            <form class="searchCity" action='/garage/garage_list' method="POST">
+                <div>
+                    <label class="city" for="searchCity">Search Your City:</label>
+                    <input type="text" name="city" id="searchCity" placeholder="Search..">
+                    <button class="button" type="submit">Submit</button>
+                </div>
+            </form>
+        
+            <form class="searchService" action='/garage/garage_list' method="POST">
+                <div>
+                    <label class="service" for="searchService">Search Service you Want:</label>
+                    <input type="text" name="city" id="searchService" placeholder="Search..">
+                    <button class="button" type="submit">Submit</button>
+                </div>
+            </form>
+        </div> --}}
         {{!-- end page content --}}
     </div>
 </div>
+

@@ -14,6 +14,23 @@
     color:antiquewhite;
     font-weight:700;
     font-size: 30px;
+    margin-left:20px;
+}
+
+.user_email_header {
+    color:antiquewhite;
+    font-weight:700;
+    font-size: 24px;
+    padding-top:0.3em;
+}
+.user_email_header:hover {
+    text-decoration: none;
+    color: antiquewhite
+}
+
+.header_row {
+    width: 100%;
+    justify-content: space-between;
 }
 
 #profile_name {
@@ -36,7 +53,7 @@
 
 html,body,.container {
     height:100%;
-    background-color: whitesmoke;
+    background-color: rgb(250, 227, 251);
 }
 
 .sidebar_link_btn {
@@ -55,13 +72,53 @@ html,body,.container {
 }
 
 .sidebar_link_btn:hover {
-    background-color: gray;
+    background-color: rgb(244, 158, 198);
 }
 
 .sidebar_link_row {
+    margin-top: 0.5em;
     justify-content: center;
 }
 
 .active {
     font-weight:700;
+}
+
+.small_margin_bot {
+    margin-bottom: 10px;
+}
+
+.appt-box {
+    border-color: gray;
+    border-style: outset;
+    border-width: 2px;
+}
+
+.desc_box {
+    border-color: gray;
+    border-style: outset;
+    border-width: 2px;
+    min-width: 500px;
+    max-width: 500px;
+    min-height: 200px;
+    max-height: 200px;
+    background-color: whitesmoke;
+    padding: 5px;
+    text-overflow:ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.input_box {
+    border-color: gray;
+    border-style: outset;
+    border-width: 2px;
+    background-color: whitesmoke;
+    padding: 5px;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+#user_prof_name {
+    text-transform: capitalize;
 }

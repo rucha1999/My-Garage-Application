@@ -1,0 +1,131 @@
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        {{!-- begin sidebar --}}
+        <div id="site_sidebar" class="col-2">
+            {{!-- begin sidebar links --}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/"> Homepage </a>
+            </div>
+            {{#unless logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/login">  Login/Register </a>
+                </div>
+            {{/unless}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/garage/garage_list"> Garage List </a>
+            </div>
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/user_profile/"> User Profile </a>
+                </div>
+            {{/if}}
+            {{#if isOwner}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/garage/management">Garage Management</a>
+                </div>
+            {{/if}}
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/logout"> Logout </a>
+                </div>
+            {{/if}}
+            {{!-- end sidebar links --}}
+        </div>
+        {{!-- end sidebar --}}
+
+        {{!-- begin page content --}}
+        <div id="site_content" class="col-10 no-float">
+            <h2>Create appointment here for {{garage.name}}.</h2>
+
+            <form id="create-appointment-form" method="POST" action="/garage/create_appointment/{{garage._id}}">
+                <label for="dateInput"><b>Date</b></label>
+                <input type="date" id="dateInput" name="dateInput" required><br>
+
+                <label for="timeInput"><b>Time</b></label>
+                <input type="time" id="timeInput" name="timeInput" required><br>
+
+                
+                <label for="serviceInput"><b>Service</b></label>
+                <select name="serviceInput" id="serviceInput" required>
+                    {{#each services}}
+                        {{#if this}}
+                            <option id={{@key}} value={{@key}} data-price={{this}}>{{@key}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select><br>
+                <div class="small_margin_bot">
+                    <span>
+                        <b>Price:</b> <span id="appt_price"></span>
+                        <input type="hidden" id="priceInput" name="priceInput">
+                    </span><br>
+                </div>
+                <div class="row">
+                    <span id="error-text"></span><br>
+                </div>
+                <div class="row">
+                    <button id="submit-create-appt-btn">
+                        <b>Submit</b>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+        {{!-- end page content --}}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#serviceInput').change(function() {
+            console.log("changing price of thingy");
+            console.log($(this).val());
+            $('#appt_price').text("$"+ $('#'+$(this).val()).data('price'));
+            $('#priceInput').val($('#'+$(this).val()).data('price'));
+        });
+        $('#dateInput').attr('min', new Date().toLocaleDateString('en-ca'));
+        $('#timeInput').attr('min', '06:00:00');
+        $('#timeInput').attr('max', '17:00:00');
+        $('#serviceInput').change();
+
+        $('#submit-create-appt-btn').on('click', function() {
+            $('#error-text').text('');
+            try {
+                let date = $('#dateInput').val();
+                let time = $('#timeInput').val();
+                let service = $('#serviceInput').val();
+                console.log(date + time + service);
+
+                if (!date) throw "Missing date";
+                if (!time) throw "Missing time";
+                if (!service) throw "Missing service";
+
+                if (typeof(date) != 'string') throw "date_time not string";
+                if (typeof(time) != 'string') throw "date_time not string";
+                if (typeof(service) != 'string') throw "service not string";
+                
+                let test_date = new Date(date);
+                if (!test_date.getTime()) throw "invalid Date string";
+
+                let timeRegex = /([01]?[0-9]|2[0-3]):[0-5][0-9]/;
+                if (!timeRegex.test(time)) throw "time not valid";
+                
+                if (time < '06:00' || time > '17:00') {
+                    throw "time out of range"
+                }
+                
+                if (service.trim().length == 0) throw "empty service str";
+                const serviceArrTest = ['pickuppart', 'maintainance', 'delivercar'];
+                if (!serviceArrTest.includes(service)) throw "invalid service";
+                
+                try {
+                    $('#create-appointment-form').submit();
+                } catch (e) {
+                    $('#error-text').text(e);
+                }
+            } catch (e) {
+                $('#error-text').text(e);
+            }
+        })
+    });
+</script>

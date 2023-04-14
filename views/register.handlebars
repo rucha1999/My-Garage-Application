@@ -1,0 +1,55 @@
+<div class="col-md-4 col-md-offset-4">
+    <form id="registration-form" method="POST" action="/register">
+        <h2>
+            Register
+        </h2>
+        <label for="nameInput"><b>Name</b></label>
+        <input class="form-control" type="text" id="nameInput" name="nameInput" placeholder="Name" required><br>
+
+        <label for="emailInput"><b>Email</b></label>
+        <input class="form-control" type="text" id="emailInput" name="emailInput" placeholder="Email" required><br>
+
+        <label for="passwordInput"><b>Password</b></label>
+        <input class="form-control" type="password" id="passwordInput" name="passwordInput" placeholder="Password" required><br>
+        <input type="submit" value="Register" class="btn btn-success">
+   </form>
+</div>
+<p id="error"> {{error}}</p>
+
+<div>
+    <span>Already have an account? <a style=color:#0055af href="/login">Login here</a></span>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#registration-form").submit(function(event) {
+            event.preventDefault(); 
+            let name = $('#nameInput').val();
+            let emailInput = document.getElementById('emailInput');
+            let email = emailInput.value;
+            let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            
+            let password = $('#passwordInput').val();
+
+            if (emailRegex.test(email) && /^\S*$/.test(password) &&  /(?=.*[A-Z])(?=.*\d)(?=.*\W)/.test(password) && /([A-Za-z]+[ ][A-Za-z]+)/.test(name) && password.length >= 6) {
+                $("#error").text('');
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/register',
+                    data: $('#registration-form').serialize(),
+                    dataType: "json",
+                }).always(function (data) {
+                    if(data.status == 200 ){
+                        window.location.href = '/login';
+                    }
+                    else {
+                        $('#registration-form')[0].reset();
+                        $('#error').text("Registration failed");
+                    }
+                });
+            } else {
+                $("#error").text("Name must be in the format <first name> <last name>.\nEmail must be in valid email address format.\nPassword must contain a capital letter, lowercase letter, number, and symbol, must not contain spaces, and must be at least 6 chars long.");
+            }
+        });
+    });
+</script>

@@ -1,0 +1,141 @@
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        {{!-- begin sidebar --}}
+        <div id="site_sidebar" class="col-2">
+            {{!-- begin sidebar links --}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/"> Homepage </a>
+            </div>
+            {{#unless logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/login">  Login/Register </a>
+                </div>
+            {{/unless}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/garage/garage_list"> Garage List </a>
+            </div>
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/user_profile/"> User Profile </a>
+                </div>
+            {{/if}}
+            {{#if isOwner}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn active" href="/garage/management">Garage Management</a>
+                </div>
+            {{/if}}
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/logout"> Logout </a>
+                </div>
+            {{/if}}
+            {{!-- end sidebar links --}}
+        </div>
+        {{!-- end sidebar --}}
+
+        {{!-- begin page content --}}
+        <div id="site_content" class="col-10">
+            <div class="row">
+                <h2>{{garage.name}}</h2>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span>
+                        <b>Monthly Earnings: </b><span id="monthly_earnings"></span>
+                    </span>
+                </div>
+                <div class="col-6">
+                    <span>
+                        <b>Number of Booked Appointments:</b> <span id="booked_appointments"></span>
+                    </span>
+                </div>
+             </div>
+
+            <div class="row">
+                <h2>
+                    Appointments
+                </h2>
+            </div>
+            {{#if appointments}}
+                <div class="col-12 px-0">
+                    {{#each appointments}}
+                        <div class="row py-3 px-2 my-1 appt-box">
+                            <div class="col-12">
+                                <div class="row">
+                                    <span>
+                                        User: {{this.user_name}}
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <span>
+                                        Appointment: {{this.date}} at {{this.time}} for the service: {{this.service}}.
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <span>
+                                        Estimated Total Price: ${{this.total_price}}
+                                    </span>
+                                </div>
+                                <div class="row">
+                                    <form id="delete-appointment-{{this._id}}" action="/garage/delete_appointment/{{this._id}}" method="POST">
+                                        <button type="submit">Delete Appointment</button>
+                                    </form>
+                                </div>
+                            </div>                        
+                        </div>
+                    {{/each}}
+                </div>
+            {{else}}
+                <div class='row'>
+                    <h3>You have no appointments.</h3>
+                </div>
+            {{/if}}
+            <div class="row">
+                <h2>
+                    Inventory
+                </h2>
+            </div>
+
+            {{#each inventory}}
+                <div class="row py-3 px-2 my-1 appt-box">
+                    {{#each this}}
+                    <div class="col-12">
+                        <div class="row">
+                            <span>
+                                {{@key}}: {{this}}
+                            </span>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            {{/each}}
+
+            <div class="row">
+                <h2>
+                    Services
+                </h2>
+            </div>
+
+            {{#each services}}
+                <div class="row py-3 px-2 my-1 appt-box">
+                    <div class="col-12">
+                        <div class="row">
+                            <span>
+                                {{@key}}: {{#if this}}${{this}}{{else}}not offered{{/if}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+
+        </div>
+        {{!-- end page content --}}
+    </div>
+</div>
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $('#monthly_earnings').text('$'+ {{garage.monthly_earnings}});
+        $('#booked_appointments').text({{num_appointments}});
+    });
+</script>

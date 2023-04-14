@@ -1,0 +1,57 @@
+<div class="col-md-4 col-md-offset-4">
+    <h2>Login</h2>
+    <div class="form-group">
+        <form id="login-form" method="POST">
+ 
+            <label for="emailInput">Email</label>
+            <input class="form-control" type="text" id="emailInput" name="emailInput" placeholder="Email" required><br>
+
+            <label for="passwordInput">Password</label>
+            <input class="form-control" type="password" id="passwordInput" name="passwordInput" placeholder="Password" required><br>
+            <input type="submit" value="Login" class="btn btn-success">
+
+        </form>
+    </div>
+    <div class="mssg bg-danger">
+        <span id="check"></span>
+    </div>
+    <p id="error"> {{error}}</p>
+
+    <div>
+        <span>Create a new Account? <a style=color:#0055af href="/register">Register here</a></span>
+    </div>
+    
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login-form").submit(function(event) {
+            event.preventDefault(); 
+            let emailInput = document.getElementById('emailInput');
+            let email = emailInput.value;
+            let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            
+            let password = $('#passwordInput').val();
+
+            if (emailRegex.test(email) && /^\S*$/.test(password) &&  /(?=.*[A-Z])(?=.*\d)(?=.*\W)/.test(password) && password.length >= 6) {
+                $("#error").text('');
+                $.ajax({
+                    type: 'POST',
+                    url: '/users/login',
+                    data: $('#login-form').serialize(),
+                    dataType: "json",
+                }).always( function (data) {
+                    if(data.status == 200) {
+                        window.location.href = '/';
+                    } else {
+                        $('#login-form')[0].reset();
+                        $('#error').text("Unknown login credentials");
+                    }
+                });
+            } else {
+                $("#error").text("Email must be in valid email address format.\nPassword must contain a capital letter, lowercase letter, number, and symbol, must not contain spaces, and must be at least 6 chars long.");
+            }
+        });
+    });
+</script>

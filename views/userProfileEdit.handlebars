@@ -1,0 +1,125 @@
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        {{!-- begin sidebar --}}
+        <div id="site_sidebar" class="col-2">
+            {{!-- begin sidebar links --}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/"> Homepage </a>
+            </div>
+            {{#unless logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/login">  Login/Register </a>
+                </div>
+            {{/unless}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/garage/garage_list"> Garage List </a>
+            </div>
+            {{#if logged_in}}
+                <div class="row sidebar_link_row ">
+                    <a class="sidebar_link_btn active" href="/users/user_profile/"> User Profile </a>
+                </div>
+            {{/if}}
+            {{#if isOwner}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/garage/management">Garage Management</a>
+                </div>
+            {{/if}}
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/logout"> Logout </a>
+                </div>
+            {{/if}}
+            {{!-- end sidebar links --}}
+        </div>
+        {{!-- end sidebar --}}
+
+        {{!-- begin page content --}}
+        <div id="site_content" class="col-10">
+            <form id="profile-edit-form" method="POST">
+                <div class="row">
+                    <label for="nameInput"><b>Name:</b></label>
+                    <input class="form-control" type="text" id="nameInput" name="nameInput" placeholder="Name" required>
+                </div>
+                <div class="row">
+                    <label for="emailInput"><b>Email:</b></label>
+                    <input class="form-control" type="text" id="emailInput" name="emailInput" placeholder="Email" required>
+                </div>
+                <div class="row">
+                    <label for="descriptionInput">
+                        <b>Description:</b> 
+                    </label>
+                </div>
+                <div class="row">
+                    <input class="form-control input_box" type="text" id="descriptionInput" name="descriptionInput" placeholder="Description" maxlength="140">
+                </div>
+
+                <div class="row">
+                    <label for="vehicleInput">
+                        <b>Vehicles:</b>
+                    </label>
+                </div>
+                <div class="row">
+                    <input class="form-control input_box" type="text" id="vehicleInput" name="vehicleInput" placeholder="Vehicles" maxlength="140">
+                </div>
+                <div class="row">
+                    <span id="error-text"></span>
+                </div>
+                <div class="row">
+                    <button id="profile_edit_submit_btn">Submit</button>
+                </div>
+            </form>
+        </div>
+        {{!-- end page content --}}
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#nameInput').val('{{user.name}}');
+        $('#emailInput').val('{{user.email}}');
+        $('#descriptionInput').val('{{user.description}}');
+        $('#vehicleInput').val('{{user.vehicles}}');
+
+        $('#profile_edit_submit_btn').on('click', function (e) {
+            $('#error-text').text('');
+            e.preventDefault();
+            e.stopPropagation();
+            try {
+                let name = $('#nameInput').val();
+                let email = $('#emailInput').val();
+                let description = $('#descriptionInput').val();
+                let vehicles =  $('#vehicleInput').val();
+
+                if (!name) throw "No name provided";
+                if (typeof(name) != 'string') throw "name not string";
+                let nameRegex = /([A-Za-z]+[ ][A-Za-z]+)/;
+                if (!nameRegex.test(name.trim())) throw "name not in correct form firstname lastname"
+
+                if (typeof(email) != 'string') throw "email not string";
+                let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                if (!emailRegex.test(email.trim())) throw "not valid email";
+                const emailToSubmit = email.trim().toLowerCase();
+
+                if (description) {
+                    if (typeof(description) != 'string') throw "desc not string"
+                    if (description.trim().length > 140) throw "desc too long" 
+                }
+                if (vehicles) {
+                    if (typeof(vehicles) != 'string') throw "vehicles desc not string"
+                    if (vehicles.trim().length > 140) throw "vehicles desc too long" 
+                }
+                try {
+                    $('#profile-edit-form').submit();
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            catch (e) {
+                $('#error-text').text(e);
+            }
+            
+
+
+        })
+    }); 
+</script>

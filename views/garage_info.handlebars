@@ -1,0 +1,145 @@
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        {{!-- begin sidebar --}}
+        <div id="site_sidebar" class="col-2">
+            {{!-- begin sidebar links --}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/"> Homepage </a>
+            </div>
+            {{#unless logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/login">  Login/Register </a>
+                </div>
+            {{/unless}}
+            <div class="row sidebar_link_row">
+                <a class="sidebar_link_btn" href="/garage/garage_list"> Garage List </a>
+            </div>
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/user_profile/"> User Profile </a>
+                </div>
+            {{/if}}
+            {{#if isOwner}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/garage/management">Garage Management</a>
+                </div>
+            {{/if}}
+            {{#if logged_in}}
+                <div class="row sidebar_link_row">
+                    <a class="sidebar_link_btn" href="/users/logout"> Logout </a>
+                </div>
+            {{/if}}
+            {{!-- end sidebar links --}}
+        </div>
+        {{!-- end sidebar --}}
+
+        {{!-- begin page content --}}
+        <div id="site_content" class="col-10">
+            <div class="row">
+                <h2>{{garage.name}}</h2>
+            </div>
+            <div class="row">
+                <h3>
+                    Location: {{garage.location}}
+                </h3>
+             </div>
+            <div class="row">
+                <h3>
+                    Phone: {{garage.phoneNumber}}
+                </h3>
+            </div>
+            <div class="row">
+                <h3>
+                    Website: <a style=color:#0055af href="{{garage.website}}"> {{garage.website}} </a>
+                </h3>
+            </div>
+            {{#if cur_user}}
+                <div class="row">
+                    <h2>
+                        Your Appointments
+                    </h2>
+                </div>
+                {{#if appointments}}
+                    <div class="col-12 px-0">
+                        {{#each appointments}}
+                            <div class="row py-3 px-2 my-1 appt-box">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <span>
+                                            User: {{this.user_name}}
+                                        </span>
+                                    </div>
+                                    <div class="row">
+                                        <span>
+                                            Appointment: {{this.date}} at {{this.time}} for the service: {{this.service}}.
+                                        </span>
+                                    </div>
+                                    <div class="row">
+                                        <span>
+                                            Estimated Total Price: ${{this.total_price}}
+                                        </span>
+                                    </div>
+                                </div>                        
+                            </div>
+                        {{/each}}
+                        
+                    </div>
+                {{else}}
+                    <div class='row'>
+                        <h3>You have no appointments.</h3>
+                    </div>
+                {{/if}}
+                <div class="row">
+                    <b><a style=color:#0055af href="/garage/create_appointment/{{garage._id}}"> Create Appointment +</a></b>
+                </div>
+                
+            {{/if}}
+             <div class="row">
+                <h2>
+                    Inventory
+                </h2>
+             </div>
+             {{#each inventory}}
+                <div class="row py-3 px-2 my-1 appt-box">
+                    {{#each this}}
+                    <div class="col-12">
+                        <div class="row">
+                            <span>
+                                {{@key}}: {{this}}
+                            </span>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            {{/each}}
+            {{#if services}}
+                <div class="row">
+                    <h2>
+                        Services
+                    </h2>
+                </div>
+                {{#each services}}
+                    <div class="row py-3 px-2 my-1 appt-box">
+                        <div class="col-12">
+                            <div class="row">
+                                <span>
+                                    {{@key}}: {{#if this}}${{this}}{{else}}not offered{{/if}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            {{/if}}
+            {{#if cur_user}}
+                <div class="row">
+                    <form id="mark-as-fav" method="POST" action="/users/favorite/{{garage._id}}">
+                        <button id="mark-as-favorite">
+                            Mark as Favorite
+                        </button>
+                    </form>
+                </div>
+            {{/if}}
+        </div>
+        {{!-- end page content --}}
+    </div>
+</div>
