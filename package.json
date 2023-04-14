@@ -1,24 +1,33 @@
 {
-  "name": "cs-546_group32_finalproject",
+  "name": "cs546_final_project",
   "version": "1.0.0",
-  "description": "The codebase for Garage Management Application.",
+  "description": "CS546 Project Workspace.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "seed": "node tasks/seed.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rucha1999/CS-546_Group32_FinalProject.git"
+    "url": "git+https://github.com/Arya-Shah/CS546_Final_Project.git"
   },
-  "author": "Matthew Wrobel, Yuxin Zhang, Rucha Tirodkar, Shivam Patel, Arya Shah",
-  "license": "ISC",
+  "author": "Matthew Wrobel, Ethan Chang, Rucha Tirodkar, Shivam Patel, Arya Shah",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rucha1999/CS-546_Group32_FinalProject/issues"
+    "url": "https://github.com/Arya-Shah/CS546_Final_Project/issues"
   },
-  "homepage": "https://github.com/rucha1999/CS-546_Group32_FinalProject#readme",
+  "homepage": "https://github.com/Arya-Shah/CS546_Final_Project#readme",
   "dependencies": {
-    "bootstrap": "^5.2.2",
+    "ajax": "^0.0.4",
+    "axios": "^1.2.1",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.3",
+    "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
-    "express-handlebars": "^6.0.6"
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "jquery": "^3.6.3",
+    "mongodb": "^4.13.0"
   }
 }
